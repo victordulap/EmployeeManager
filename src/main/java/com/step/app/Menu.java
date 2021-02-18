@@ -94,7 +94,7 @@ public class Menu {
                 case "1":
                     return empShow.getEmployeeById(em.getEmployees());
                 case "2":
-                    break;
+                    return empShow.getEmployeeByIdnp(em.getEmployees());
                 case "3":
                     break;
 //                case "0":

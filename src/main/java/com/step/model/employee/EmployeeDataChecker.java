@@ -10,7 +10,7 @@ public class EmployeeDataChecker {
      *
      * @param employees employees to check in, if idnp is repetitive
      */
-    public boolean checkIfIDNPValid(String idnp, List<Employee> employees) {
+    public boolean checkIfIDNPValid(String idnp, List<Employee> employees, boolean checkIfUnique) {
 //        if (idnp == null) {
 //            throw new Exception("IDNP cannot be null");
 //        } else if (!idnp.matches("[0-9]+")) {
@@ -18,7 +18,7 @@ public class EmployeeDataChecker {
 //        } else if (idnp.length() != 13) {
 //            throw new Exception("IDNP must contain 13 symbols");
 //        }
-        if (idnp == null || !idnp.matches("[0-9]+") || idnp.length() != 13 || checkIfIDNPRepetitive(idnp, employees)) {
+        if (idnp == null || !idnp.matches("[0-9]+") || idnp.length() != 13 || (checkIfUnique ? checkIfIDNPRepetitive(idnp, employees) : false)) {
             return false;
         } else {
             return true;

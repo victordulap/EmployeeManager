@@ -132,4 +132,8 @@ public class Employee {
 
         return emps;
     }
+
+    protected static void resetId() {
+        lastId = 0;
+    }
 }

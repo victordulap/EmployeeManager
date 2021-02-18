@@ -51,11 +51,11 @@ public class EmployeeInputFromConsole {
      * @param employees to check in if found a repetitive idnp
      * @return valid name with first letter upper case
      */
-    public String readIdnp(String message, List<Employee> employees) {
+    public String readIdnp(String message, List<Employee> employees, boolean checkIfIdnpUnique) {
         while (true) {
             String idnp = this.readString(message);
 
-            if (edc.checkIfIDNPValid(idnp, employees)) {
+            if (edc.checkIfIDNPValid(idnp, employees, checkIfIdnpUnique)) {
                 return idnp;
             } else {
                 this.showError("IDNP invalid, should contain 13 numbers and be unique, try again... (ex of valid idnp: \"1234567890123\")");

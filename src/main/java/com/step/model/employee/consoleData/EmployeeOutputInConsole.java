@@ -132,7 +132,7 @@ public class EmployeeOutputInConsole {
     public Employee getNewEmployee(List<Employee> employees) {
         String name = eifc.readName("Enter name: ");
         String surname = eifc.readName("Enter surname: ");
-        String idnp = eifc.readIdnp("Enter idnp: ", employees);
+        String idnp = eifc.readIdnp("Enter idnp: ", employees, true);
         LocalDate birthDate = eifc.readBirthDate("Enter birth date: ");
         Double salary = eifc.readDouble("Enter salary: ");
         Job job = eifc.readJob("Enter job: ");
@@ -145,9 +145,9 @@ public class EmployeeOutputInConsole {
      * @return a new employee with edited data
      */
     public Employee editEmployee(Employee oldEmp) {
-        String name = eifc.readName("Enter name " + oldEmp.getName() + " -> ");
-        String surname = eifc.readName("Enter surname " + oldEmp.getSurname() + " -> ");
-        Double salary = eifc.readDouble("Enter salary " + oldEmp.getSalary() + " -> ");
+        String name = eifc.readName("Enter name: " + oldEmp.getName() + " -> ");
+        String surname = eifc.readName("Enter surname: " + oldEmp.getSurname() + " -> ");
+        Double salary = eifc.readDouble("Enter salary: " + oldEmp.getSalary() + " -> ");
         Job job = eifc.readJob("Enter job: " + oldEmp.getJob() + " -> ");
 
         return new Employee(name, surname, salary, job);
@@ -170,5 +170,24 @@ public class EmployeeOutputInConsole {
         }
 
         return empById;
+    }
+
+    public Employee getEmployeeByIdnp(List<Employee> employees) {
+        boolean employeeFound = false;
+        Employee empByIdnp = null;
+
+        while (!employeeFound) {
+            String idnp = eifc.readIdnp("Enter idnp: ", employees, false);
+
+            empByIdnp = employeeFinder.findByIdnp(employees, idnp);
+
+            if (empByIdnp != null) {
+                employeeFound = true;
+            } else {
+                System.out.println("Employee not found, try again...");
+            }
+        }
+
+        return empByIdnp;
     }
 }

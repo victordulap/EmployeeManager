@@ -15,4 +15,11 @@ public class EmployeeFinder {
                 .findAny()
                 .orElse(null);
     }
+
+    public Employee findByIdnp(List<Employee> employees, String idnp) {
+        return employees.stream()
+                .filter(employee -> employee.getIdnp().equals(idnp))
+                .findAny()
+                .orElse(null);
+    }
 }
