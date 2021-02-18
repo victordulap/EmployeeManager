@@ -2,21 +2,24 @@ package com.step.model.employee.consoleData;
 
 import com.step.model.employee.Employee;
 import com.step.model.employee.EmployeeDataChecker;
+import com.step.model.employee.Job;
 import com.step.utilities.Utilities;
 
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class EmployeeInputFromConsole {
     /*
-    int id - unique, gestionated from data base
+    - int id - unique, gestionated from data base
 	+ string name
 	+ string surname
-    string idnp - unique, gestionated from app
-    LocalDate birthDate
-    LocalDate engagedOn
-    double salary
-    Job job - Job is a enum with jobs
+    + string idnp - unique, gestionated from app
+    + LocalDate birthDate
+    - LocalDate engagedOn
+    + double salary
+    + Job job - Job is a enum with jobs
      */
 
     private Utilities util = new Utilities();
@@ -30,19 +33,32 @@ public class EmployeeInputFromConsole {
      */
     public String readName(String message) {
         while (true) {
-            Scanner sc = new Scanner(System.in);
-
-            System.out.print(message);
-            String name = sc.nextLine();
-
-            name = name.trim();
+            String name = this.readString(message);
 
             if (edc.checkIfNameValid(name)) {
                 name = util.firstLetterUpperCase(name);
                 return name;
             } else {
-                System.out.println("Name invalid, try again... (ex of valid name: \"John\")");
-                util.enterAnyValueToContinue();
+                this.showError("Name invalid, try again... (ex of valid name: \"John\")");
+            }
+        }
+    }
+
+    /**
+     * @param message   text to show in console, ex:
+     *                  message = "Enter name"
+     *                  output: Enter name: (input form keyboard)
+     * @param employees to check in if found a repetitive idnp
+     * @return valid name with first letter upper case
+     */
+    public String readIdnp(String message, List<Employee> employees) {
+        while (true) {
+            String idnp = this.readString(message);
+
+            if (edc.checkIfIDNPValid(idnp, employees)) {
+                return idnp;
+            } else {
+                this.showError("IDNP invalid, should contain 13 numbers and be unique, try again... (ex of valid idnp: \"1234567890123\")");
             }
         }
     }
@@ -51,25 +67,55 @@ public class EmployeeInputFromConsole {
      * @param message text to show in console, ex:
      *                message = "Enter name"
      *                output: Enter name: (input form keyboard)
-     * @param employees to check in if found a repetitive idnp
      * @return valid name with first letter upper case
      */
-    public String readIdnp(String message, List<Employee> employees) {
+    public LocalDate readBirthDate(String message) {
         while (true) {
-            Scanner sc = new Scanner(System.in);
+            String birthDate = this.readString(message);
 
-            System.out.print(message);
-            String idnp = sc.nextLine();
-
-            idnp = idnp.trim();
-
-            if (edc.checkIfIDNPValid(idnp, employees)) {
-                return idnp;
+            if (edc.checkIfDateFromStringValid(birthDate)) {
+                return LocalDate.parse(birthDate, Employee.dateTimeFormatter);
             } else {
-                System.out.println("IDNP invalid, should contain 13 numbers, try again... (ex of valid idnp: \"1234567890123\")");
-                util.enterAnyValueToContinue();
+                this.showError("Date invalid, should be formatted in \"dd.mm.yyyy\", try again... (ex of valid date: \"20.02.1999\")");
             }
         }
     }
 
+    public Double readDouble(String message) {
+        while (true) {
+            String number = this.readString(message);
+
+            if (edc.checkIfDoubleFromStringValid(number)) {
+                return Double.parseDouble(number);
+            } else {
+                this.showError("Number invalid, try again... (ex of valid number: \"1234.5\")");
+            }
+        }
+    }
+
+    public Job readJob(String message) {
+        while (true) {
+            String job = this.readString(message);
+
+            if (edc.checkIfJobFromStringValid(job)) {
+                return Job.valueOf(job.toUpperCase());
+            } else {
+                this.showError("Job invalid, try again... (job list: " + Arrays.toString(Job.values()) + ")");
+            }
+        }
+    }
+
+    private String readString(String message) {
+            Scanner sc = new Scanner(System.in);
+
+            System.out.print(message);
+            String str = sc.nextLine();
+
+            return str.trim();
+    }
+
+    private void showError(String errorMessage) {
+        System.out.println(errorMessage);
+        util.enterAnyValueToContinue();
+    }
 }

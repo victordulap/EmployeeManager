@@ -7,5 +7,5 @@ public enum Job {
     ENGINEER,
     CLEANER,
     BOSS,
-    CHEF
+    CHEF;
 }

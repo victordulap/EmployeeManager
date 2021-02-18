@@ -1,8 +1,11 @@
 package com.step.model.employee.consoleData;
 
+import com.step.model.employee.Job;
+import com.step.model.employee.manager.EmployeeManager;
 import com.step.utilities.Utilities;
 import com.step.model.employee.Employee;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class EmployeeOutputInConsole {
@@ -121,11 +124,17 @@ public class EmployeeOutputInConsole {
     }
 
     /**
+     * basically used to get a new employee and send it to EmployeeManager.insert()
      * @param employees to check in this list if found a repetitive idnp
      */
-    public void insert(List<Employee> employees) {
+    public Employee getNewEmployee(List<Employee> employees) {
         String name = eifc.readName("Enter name: ");
         String surname = eifc.readName("Enter surname: ");
         String idnp = eifc.readIdnp("Enter idnp: ", employees);
+        LocalDate birthDate = eifc.readBirthDate("Enter birth date: ");
+        Double salary = eifc.readDouble("Enter salary: ");
+        Job job = eifc.readJob("Enter job: ");
+
+        return new Employee(name, surname, idnp, birthDate, salary, job);
     }
 }

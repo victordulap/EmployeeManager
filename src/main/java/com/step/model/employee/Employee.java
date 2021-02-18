@@ -29,7 +29,7 @@ public class Employee {
 
 //    addition fields
     private static int lastId = 0;
-    private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
     public Employee(String name, String surname, String idnp, LocalDate birthDate, Double salary, Job job) {
         this.id = lastId++;
@@ -47,17 +47,12 @@ public class Employee {
      *
      * @param name new name
      * @param surname new surname
-     * @param birthDate new birthDate
      * @param salary new salary
      * @param job new job
      */
-    public Employee(String name, String surname, LocalDate birthDate, Double salary, Job job) {
-        this.id = -1;
+    public Employee(String name, String surname, Double salary, Job job) {
         this.name = name;
         this.surname = surname;
-        this.idnp = "no idnp, blank";
-        this.birthDate = birthDate;
-        this.engagedOn =  LocalDate.now();
         this.salary = salary;
         this.job = job;
     }
