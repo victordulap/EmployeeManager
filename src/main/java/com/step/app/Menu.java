@@ -1,23 +1,22 @@
 package com.step.app;
 
 import com.step.model.employee.Employee;
-import com.step.model.employee.Job;
 import com.step.model.employee.consoleData.EmployeeOutputInConsole;
 import com.step.model.employee.manager.EmployeeManager;
 import com.step.model.employee.manager.EmployeeManagerInMemory;
 import com.step.utilities.Utilities;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Menu {
     //    todo: make the user to choose the EmployeeManager method of working
     private EmployeeManager em = new EmployeeManagerInMemory();
+    private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
+    private Utilities util = new Utilities();
+
     {
         em.getEmployees().addAll(Employee.getDummyEmployees());
     }
-    private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
-    private Utilities util = new Utilities();
 
     public void startMenu() {
         Scanner sc = new Scanner(System.in);
@@ -51,7 +50,10 @@ public class Menu {
                     em.edit(empToEdit.getId(), empShow.editEmployee(empToEdit));
                     break;
                 case "4":
-                    em.delete(0);
+                    Employee empToDelete = this.findMenu();
+                    em.delete(empToDelete.getId());
+                    System.out.println("Deleted employee " + empToDelete.getName() + empToDelete.getSurname() +
+                            " (" + empToDelete.getId() + "/" + empToDelete.getIdnp() + ") with success!");
                     break;
                 case "0":
                     util.clearScreen();
@@ -72,7 +74,7 @@ public class Menu {
     private Employee findMenu() {
         Scanner sc = new Scanner(System.in);
         String nav = "";
-        Employee foundEmp;
+        Employee foundEmp = null;
 
         util.clearScreen();
 
@@ -108,6 +110,6 @@ public class Menu {
             util.clearScreen();
         } while (!nav.equals("0"));
 
-        return null;
+        return foundEmp;
     }
 }
