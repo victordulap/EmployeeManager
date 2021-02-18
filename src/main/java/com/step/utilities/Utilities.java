@@ -14,7 +14,7 @@ public class Utilities {
     }
 
     public void enterAnyValueToContinue() {
-        System.out.println("Enter any value to continue...");
+        System.out.print("Enter any value to continue... ");
         sc.nextLine();
     }
 

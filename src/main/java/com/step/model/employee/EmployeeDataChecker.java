@@ -72,6 +72,19 @@ public class EmployeeDataChecker {
         }
     }
 
+    public boolean checkIfIntFromStringValid(String stringNumber) {
+        if (stringNumber == null || stringNumber.length() <= 0) {
+            return false;
+        } else {
+            try {
+                Integer number = Integer.parseInt(stringNumber);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+    }
+
     public boolean checkIfJobFromStringValid(String job) {
         if (job == null || job.length() <= 0) {
             return false;

@@ -52,6 +52,7 @@ public class EmployeeDataCheckerTest {
         EmployeeDataChecker edc = new EmployeeDataChecker();
 
         TestCase.assertTrue("Testing if we can add a valid double number", edc.checkIfDoubleFromStringValid("1234.5"));
+        TestCase.assertTrue("Testing if we can add a valid negative double number", edc.checkIfDoubleFromStringValid("-1234.5"));
         TestCase.assertTrue("Testing if we can add a valid int number", edc.checkIfDoubleFromStringValid("100"));
         TestCase.assertFalse("Testing if we cant add a invalid number", edc.checkIfDoubleFromStringValid("asdf123;asdf"));
         TestCase.assertFalse("Testing if we cant add null", edc.checkIfDoubleFromStringValid(null));
@@ -60,6 +61,21 @@ public class EmployeeDataCheckerTest {
         TestCase.assertTrue("Testing if we can add a number ending with dot (.)", edc.checkIfDoubleFromStringValid("5."));
         TestCase.assertFalse("Testing if we cant add a number with 2 dots (.)", edc.checkIfDoubleFromStringValid("5..5"));
         TestCase.assertFalse("Testing if we cant add a number with comma (,) instead of dot (.)", edc.checkIfDoubleFromStringValid("1234,5"));
+    }
+
+    @Test
+    public void testCheckIfIntFromStringValid() {
+        EmployeeDataChecker edc = new EmployeeDataChecker();
+
+        TestCase.assertTrue("Testing if we can add a valid int number", edc.checkIfIntFromStringValid("100"));
+        TestCase.assertTrue("Testing if we can add a valid negative int number", edc.checkIfIntFromStringValid("-100"));
+        TestCase.assertFalse("Testing if we cant add a invalid number", edc.checkIfIntFromStringValid("asdf123;asdf"));
+        TestCase.assertFalse("Testing if we cant add null", edc.checkIfIntFromStringValid(null));
+        TestCase.assertFalse("Testing if we cant add empty number", edc.checkIfIntFromStringValid(""));
+        TestCase.assertFalse("Testing if we cant add a number starting with dot (.)", edc.checkIfIntFromStringValid(".5"));
+        TestCase.assertFalse("Testing if we cant add a number ending with dot (.)", edc.checkIfIntFromStringValid("5."));
+        TestCase.assertFalse("Testing if we cant add a number with 2 dots (.)", edc.checkIfIntFromStringValid("5..5"));
+        TestCase.assertFalse("Testing if we cant add a number with comma (,) instead of dot (.)", edc.checkIfIntFromStringValid("1234,5"));
     }
 
     @Test

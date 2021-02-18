@@ -13,6 +13,9 @@ import java.util.Scanner;
 public class Menu {
     //    todo: make the user to choose the EmployeeManager method of working
     private EmployeeManager em = new EmployeeManagerInMemory();
+    {
+        em.getEmployees().addAll(Employee.getDummyEmployees());
+    }
     private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
     private Utilities util = new Utilities();
 
@@ -44,7 +47,8 @@ public class Menu {
                     em.insert(empShow.getNewEmployee(em.getEmployees()));
                     break;
                 case "3":
-                    em.edit(0, new Employee("Edited", "Employee", (double) 1000, Job.PROGRAMMER));
+                    Employee empToEdit = this.findMenu();
+                    em.edit(empToEdit.getId(), empShow.editEmployee(empToEdit));
                     break;
                 case "4":
                     em.delete(0);
@@ -63,5 +67,47 @@ public class Menu {
 
             util.clearScreen();
         } while (!nav.equals("0"));
+    }
+
+    private Employee findMenu() {
+        Scanner sc = new Scanner(System.in);
+        String nav = "";
+        Employee foundEmp;
+
+        util.clearScreen();
+
+        do {
+            System.out.println("Find by");
+            System.out.println();
+            System.out.println("\t1. id");
+            System.out.println("\t2. idnp");
+            System.out.println("\t3. name and surname");
+//            System.out.println();
+//            System.out.println("\t0. exit");
+
+            System.out.print("\nenter submenu number: ");
+            nav = sc.nextLine();
+
+            switch (nav) {
+                case "1":
+                    return empShow.getEmployeeById(em.getEmployees());
+                case "2":
+                    break;
+                case "3":
+                    break;
+//                case "0":
+//                    util.clearScreen();
+//                    break;
+
+                default:
+                    System.out.println("\nNo such submenu, try again (ex: 1)");
+                    util.enterAnyValueToContinue();
+                    break;
+            }
+
+            util.clearScreen();
+        } while (!nav.equals("0"));
+
+        return null;
     }
 }

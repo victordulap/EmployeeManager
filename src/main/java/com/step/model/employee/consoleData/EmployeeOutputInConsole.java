@@ -1,9 +1,9 @@
 package com.step.model.employee.consoleData;
 
-import com.step.model.employee.Job;
-import com.step.model.employee.manager.EmployeeManager;
-import com.step.utilities.Utilities;
 import com.step.model.employee.Employee;
+import com.step.model.employee.EmployeeFinder;
+import com.step.model.employee.Job;
+import com.step.utilities.Utilities;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -11,7 +11,8 @@ import java.util.List;
 public class EmployeeOutputInConsole {
     private Utilities util = new Utilities();
     private EmployeeInputFromConsole eifc = new EmployeeInputFromConsole();
-    
+    private EmployeeFinder employeeFinder = new EmployeeFinder();
+
     public void showEmployeesInTable(List<Employee> employees) {
         util.clearScreen();
 
@@ -125,6 +126,7 @@ public class EmployeeOutputInConsole {
 
     /**
      * basically used to get a new employee and send it to EmployeeManager.insert()
+     *
      * @param employees to check in this list if found a repetitive idnp
      */
     public Employee getNewEmployee(List<Employee> employees) {
@@ -136,5 +138,37 @@ public class EmployeeOutputInConsole {
         Job job = eifc.readJob("Enter job: ");
 
         return new Employee(name, surname, idnp, birthDate, salary, job);
+    }
+
+    /**
+     * @param oldEmp used to show old data for comfort
+     * @return a new employee with edited data
+     */
+    public Employee editEmployee(Employee oldEmp) {
+        String name = eifc.readName("Enter name " + oldEmp.getName() + " -> ");
+        String surname = eifc.readName("Enter surname " + oldEmp.getSurname() + " -> ");
+        Double salary = eifc.readDouble("Enter salary " + oldEmp.getSalary() + " -> ");
+        Job job = eifc.readJob("Enter job: " + oldEmp.getJob() + " -> ");
+
+        return new Employee(name, surname, salary, job);
+    }
+
+    public Employee getEmployeeById(List<Employee> employees) {
+        boolean employeeFound = false;
+        Employee empById = null;
+
+        while (!employeeFound) {
+            Integer id = eifc.readId("Enter id: ");
+
+            empById = employeeFinder.findById(employees, id);
+
+            if (empById != null) {
+                employeeFound = true;
+            } else {
+                System.out.println("Employee not found, try again...");
+            }
+        }
+
+        return empById;
     }
 }

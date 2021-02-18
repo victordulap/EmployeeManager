@@ -93,6 +93,18 @@ public class EmployeeInputFromConsole {
         }
     }
 
+    public Integer readId(String message) {
+        while (true) {
+            String id = this.readString(message);
+
+            if (edc.checkIfIntFromStringValid(id)) {
+                return Integer.parseInt(id);
+            } else {
+                this.showError("ID invalid, try again... (ex of valid ID: \"1\")");
+            }
+        }
+    }
+
     public Job readJob(String message) {
         while (true) {
             String job = this.readString(message);

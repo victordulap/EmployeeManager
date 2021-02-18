@@ -20,7 +20,6 @@ public class EmployeeManagerInMemory implements EmployeeManager {
         if (employeeIndex >= 0) {
             employees.get(employeeIndex).setName(newEmployee.getName());
             employees.get(employeeIndex).setSurname(newEmployee.getSurname());
-            employees.get(employeeIndex).setBirthDate(newEmployee.getBirthDate());
             employees.get(employeeIndex).setSalary(newEmployee.getSalary());
             employees.get(employeeIndex).setJob(newEmployee.getJob());
             return true;
