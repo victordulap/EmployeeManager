@@ -3,24 +3,86 @@ package com.step.app;
 import com.step.model.employee.Employee;
 import com.step.model.employee.consoleData.EmployeeOutputInConsole;
 import com.step.model.employee.manager.EmployeeManager;
-import com.step.model.employee.manager.EmployeeManagerInMemory;
+import com.step.model.employee.manager.csv.EmployeeManagerInCSVFile;
+import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.utilities.Utilities;
 
 import java.util.Scanner;
 
 public class Menu {
     //    todo: make the user to choose the EmployeeManager method of working
-    private EmployeeManager em = new EmployeeManagerInMemory();
+    private EmployeeManager em;
     private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
     private Utilities util = new Utilities();
 
-    {
-        em.getEmployees().addAll(Employee.getDummyEmployees());
+//    {
+//        em.getEmployees().addAll(Employee.getDummyEmployees());
+//    }
+
+    private void selectAppModeMenu() {
+        Scanner sc = new Scanner(System.in);
+        Boolean modeChosen = false;
+        String nav = "";
+
+        util.clearScreen();
+
+        while(!modeChosen) {
+            System.out.println("EMPLOYEE MANAGEMENT, choose data processing mode:");
+            System.out.println();
+            System.out.println("\t1. Demo (no saving at all)");
+            System.out.println("\t2. CSV file");
+            System.out.println("\t3. Encoded file");
+            System.out.println("\t4. XML file");
+            System.out.println("\t5. JSON file");
+            System.out.println("\t6. Data base");
+            System.out.println();
+            System.out.println("\t0. exit");
+
+            System.out.print("\nenter submenu number: ");
+            nav = sc.nextLine();
+
+            switch (nav) {
+                case "1":
+                    em = new EmployeeManagerInMemory();
+                    em.getEmployees().addAll(Employee.getDummyEmployees());
+                    modeChosen = true;
+                    break;
+                case "2":
+                    em = new EmployeeManagerInCSVFile();
+                    em.getEmployees().addAll(Employee.getDummyEmployees());
+                    modeChosen = true;
+                    break;
+//                case "3":
+//                    break;
+//                case "4":
+//                    break;
+//                case "5":
+//                    break;
+//                case "6":
+//                    break;
+                case "0":
+                    util.clearScreen();
+                    System.out.println("Application closed!");
+                    System.exit(0);
+                    break;
+
+                default:
+                    System.out.println("\nNo such submenu, try again (ex: 1)");
+                    util.enterAnyValueToContinue();
+                    break;
+            }
+
+            util.clearScreen();
+        };
     }
 
     public void startMenu() {
+        this.selectAppModeMenu();
+
         Scanner sc = new Scanner(System.in);
         String nav = "";
+
+        // on start, load emps from file
 
         util.clearScreen();
 
@@ -75,7 +137,7 @@ public class Menu {
                                 empToDelNotFound = false;
 
                                 em.delete(empToDelete.getId());
-                                System.out.println("Deleted employee " + empToDelete.getName() + empToDelete.getSurname() +
+                                System.out.println("Deleted employee " + empToDelete.getName() + " " + empToDelete.getSurname() +
                                         " (" + empToDelete.getId() + "/" + empToDelete.getIdnp() + ") with success!");
                             } else {
                                 System.out.println("Employee not found.");

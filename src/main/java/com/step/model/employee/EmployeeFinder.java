@@ -1,7 +1,7 @@
 package com.step.model.employee;
 
 import com.step.model.employee.manager.EmployeeManager;
-import com.step.model.employee.manager.EmployeeManagerInMemory;
+import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 
 import java.util.List;
 import java.util.stream.Collectors;
