@@ -43,4 +43,35 @@ public class EmployeeFinderTest {
                 emps.stream().filter(e -> e.getIdnp().equals("1234567890123")).findAny().orElse(null), // expected
                 ef.findByIdnp(emps, "1234567890321")); // got
     }
+
+    @Test
+    public void testFindByNameAndSurname() {
+        EmployeeFinder ef = new EmployeeFinder();
+        List<Employee> emps = new ArrayList<>(Employee.getDummyEmployees());
+
+
+        try {
+            TestCase.assertEquals("Test if can find a user by name and surname",
+                    emps.stream().filter(e -> e.getName().equals("Victor") && e.getSurname().equals("Dulap")).findAny().orElse(null), // expected
+                    ef.findByNameAndSurname(emps, "Victor", "Dulap")); // got
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            TestCase.assertNull("Test if cant find a user by non existing name and surname",
+                    ef.findByNameAndSurname(emps, "Victor", "NoNameLikeThat")); // got
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Employee byNameAndSurname = ef.findByNameAndSurname(emps, "Ion", "Alb");
+            System.out.println(byNameAndSurname);
+            TestCase.assertNotNull("Test if cant find a employee that has repetitive name and surname with other employee",
+                   byNameAndSurname); // got
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+    }
 }

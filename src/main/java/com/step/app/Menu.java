@@ -46,14 +46,46 @@ public class Menu {
                     em.insert(empShow.getNewEmployee(em.getEmployees()));
                     break;
                 case "3":
-                    Employee empToEdit = this.findMenu();
-                    em.edit(empToEdit.getId(), empShow.editEmployee(empToEdit));
+                    boolean empToEditNotFound = true;
+
+                    while (empToEditNotFound) {
+                        try {
+                            Employee empToEdit = this.findMenu();
+                            if (empToEdit != null) {
+                                empToEditNotFound = false;
+
+                                Employee newEmp = empShow.editEmployee(empToEdit);
+                                em.edit(empToEdit.getId(), newEmp);
+                            } else {
+                                System.out.println("Employee not found.");
+                                util.enterAnyValueToContinue();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Exiting submenu...");
+                            empToEditNotFound = false;
+                        }
+                    }
                     break;
                 case "4":
-                    Employee empToDelete = this.findMenu();
-                    em.delete(empToDelete.getId());
-                    System.out.println("Deleted employee " + empToDelete.getName() + empToDelete.getSurname() +
-                            " (" + empToDelete.getId() + "/" + empToDelete.getIdnp() + ") with success!");
+                    boolean empToDelNotFound = true;
+                    while (empToDelNotFound) {
+                        try {
+                            Employee empToDelete = this.findMenu();
+                            if (empToDelete != null) {
+                                empToDelNotFound = false;
+
+                                em.delete(empToDelete.getId());
+                                System.out.println("Deleted employee " + empToDelete.getName() + empToDelete.getSurname() +
+                                        " (" + empToDelete.getId() + "/" + empToDelete.getIdnp() + ") with success!");
+                            } else {
+                                System.out.println("Employee not found.");
+                                util.enterAnyValueToContinue();
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Exiting submenu...");
+                            empToDelNotFound = false;
+                        }
+                    }
                     break;
                 case "0":
                     util.clearScreen();
@@ -71,7 +103,7 @@ public class Menu {
         } while (!nav.equals("0"));
     }
 
-    private Employee findMenu() {
+    private Employee findMenu() throws Exception {
         Scanner sc = new Scanner(System.in);
         String nav = "";
         Employee foundEmp = null;
@@ -84,8 +116,8 @@ public class Menu {
             System.out.println("\t1. id");
             System.out.println("\t2. idnp");
             System.out.println("\t3. name and surname");
-//            System.out.println();
-//            System.out.println("\t0. exit");
+            System.out.println();
+            System.out.println("\t0. exit");
 
             System.out.print("\nenter submenu number: ");
             nav = sc.nextLine();
@@ -96,10 +128,9 @@ public class Menu {
                 case "2":
                     return empShow.getEmployeeByIdnp(em.getEmployees());
                 case "3":
-                    break;
-//                case "0":
-//                    util.clearScreen();
-//                    break;
+                    return empShow.getEmployeeByName(em.getEmployees());
+                case "0":
+                    throw new Exception("Quited menu");
 
                 default:
                     System.out.println("\nNo such submenu, try again (ex: 1)");

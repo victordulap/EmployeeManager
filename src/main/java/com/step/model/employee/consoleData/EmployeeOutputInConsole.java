@@ -153,6 +153,9 @@ public class EmployeeOutputInConsole {
         return new Employee(name, surname, salary, job);
     }
 
+    /**
+     * @return null if emp not found
+     */
     public Employee getEmployeeById(List<Employee> employees) {
         boolean employeeFound = false;
         Employee empById = null;
@@ -162,32 +165,45 @@ public class EmployeeOutputInConsole {
 
             empById = employeeFinder.findById(employees, id);
 
-            if (empById != null) {
-                employeeFound = true;
-            } else {
-                System.out.println("Employee not found, try again...");
-            }
+            return empById;
+//            if (empById != null) {
+//                employeeFound = true;
+//            } else {
+//                System.out.println("Employee not found, try again...");
+//            }
         }
 
         return empById;
     }
 
+    /**
+     * @return null if emp not found
+     */
     public Employee getEmployeeByIdnp(List<Employee> employees) {
-        boolean employeeFound = false;
         Employee empByIdnp = null;
 
-        while (!employeeFound) {
-            String idnp = eifc.readIdnp("Enter idnp: ", employees, false);
+        String idnp = eifc.readIdnp("Enter idnp: ", employees, false);
 
-            empByIdnp = employeeFinder.findByIdnp(employees, idnp);
-
-            if (empByIdnp != null) {
-                employeeFound = true;
-            } else {
-                System.out.println("Employee not found, try again...");
-            }
-        }
+        empByIdnp = employeeFinder.findByIdnp(employees, idnp);
 
         return empByIdnp;
+    }
+
+    /**
+     * @return null if emp not found
+     */
+    public Employee getEmployeeByName(List<Employee> employees) {
+        Employee empByName = null;
+
+        String name = eifc.readName("Enter name: ");
+        String surname = eifc.readName("Enter surname: ");
+
+        try {
+            empByName = employeeFinder.findByNameAndSurname(employees, name, surname);
+        } catch (Exception e) {
+            System.out.println("Employee has repetive name and surname, try finding by other method");
+        }
+
+        return empByName;
     }
 }

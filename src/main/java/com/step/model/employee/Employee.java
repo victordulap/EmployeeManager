@@ -126,6 +126,7 @@ public class Employee {
 
         emps.add(new Employee("Victor", "Dulap", "1234567890123", LocalDate.of(2003,1,10), (double) 2000, Job.PROGRAMMER));
         emps.add(new Employee("Ion", "Alb", "4567112238903", LocalDate.of(2000,12,12), (double) 1200, Job.CHEF));
+        emps.add(new Employee("Ion", "Alb", "2412356718903", LocalDate.of(1989,1,29), (double) 900, Job.BOSS));
         emps.add(new Employee("Alexei", "Ceban", "0152237346189", LocalDate.of(1999,10,3), (double) 600, Job.ENGINEER));
         emps.add(new Employee("Maria", "Cretu", "2341251673890", LocalDate.of(1989,2,22), (double) 700, Job.CLEANER));
         emps.add(new Employee("Ana", "Donii", "0123367451289", LocalDate.of(1996,9,13), (double) 800, Job.MANAGER));
