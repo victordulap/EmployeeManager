@@ -31,4 +31,14 @@ public class EmployeeManagerInMemory implements EmployeeManager {
     public List<Employee> getEmployees() {
         return eml.getEmployees(employees);
     }
+
+    @Override
+    public void save() {
+        // nothing to load as we ar using the app mode with no storing of data :)
+    }
+
+    @Override
+    public void load() {
+        // nothing to load as we ar using the app mode with no storing of data :)
+    }
 }

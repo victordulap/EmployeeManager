@@ -151,6 +151,9 @@ public class Menu {
                     break;
                 case "0":
                     util.clearScreen();
+                    System.out.println("Saving data...");
+                    em.save();
+                    System.out.println("Saving done!");
                     System.out.println("Application closed!");
                     System.exit(0);
                     break;

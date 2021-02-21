@@ -10,6 +10,9 @@ public interface EmployeeManager {
     boolean delete(int id);
     List<Employee> getEmployees();
 
-//    void onLaunchApp();
-//    void onCloseApp();
+//    void onLaunchApp(); or save();
+    void save();
+
+//    void onCloseApp(); or load();
+    void load();
 }

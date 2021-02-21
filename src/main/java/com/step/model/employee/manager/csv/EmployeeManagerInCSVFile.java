@@ -10,6 +10,7 @@ import java.util.List;
 public class EmployeeManagerInCSVFile implements EmployeeManager {
     private List<Employee> employees = new ArrayList<>();
     private EmployeeManagerWithList eml = new EmployeeManagerWithList();
+    private EmployeeCsvIO csvIO = new EmployeeCsvIO();
 
     @Override
     public void insert(Employee employee) {
@@ -29,5 +30,17 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     @Override
     public List<Employee> getEmployees() {
         return eml.getEmployees(employees);
+    }
+
+    @Override
+    public void save() {
+        // call function to save data in file
+        csvIO.exportToCSVFile(employees);
+    }
+
+    @Override
+    public void load() {
+        // call function to get data from the file
+
     }
 }
