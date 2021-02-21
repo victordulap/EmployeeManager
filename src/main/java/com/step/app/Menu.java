@@ -49,7 +49,7 @@ public class Menu {
                     break;
                 case "2":
                     em = new EmployeeManagerInCSVFile();
-                    em.getEmployees().addAll(Employee.getDummyEmployees());
+//                    em.getEmployees().addAll(Employee.getDummyEmployees());
                     modeChosen = true;
                     break;
 //                case "3":
@@ -83,6 +83,9 @@ public class Menu {
         String nav = "";
 
         // on start, load emps from file
+        System.out.println("Loading data...");
+        em.load();
+        System.out.println("Loading data done!");
 
         util.clearScreen();
 

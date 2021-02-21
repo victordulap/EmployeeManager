@@ -1,6 +1,7 @@
 package com.step.model.employee.manager.csv;
 
 import com.step.model.employee.Employee;
+import com.step.model.employee.manager.EmployeeLastIdIO;
 import com.step.model.employee.manager.EmployeeManager;
 import com.step.model.employee.manager.EmployeeManagerWithList;
 
@@ -11,6 +12,7 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     private List<Employee> employees = new ArrayList<>();
     private EmployeeManagerWithList eml = new EmployeeManagerWithList();
     private EmployeeCsvIO csvIO = new EmployeeCsvIO();
+    private EmployeeLastIdIO lastIdIO = new EmployeeLastIdIO("employeeCSVLastId.txt");
 
     @Override
     public void insert(Employee employee) {
@@ -36,11 +38,16 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     public void save() {
         // call function to save data in file
         csvIO.exportToCSVFile(employees);
+        // save lastId
+        lastIdIO.save(Employee.getLastId());
     }
 
     @Override
     public void load() {
         // call function to get data from the file
-
+        employees.addAll(csvIO.importFromCSVFile());
+        // load lastId
+        // todo: make last id loading work
+        lastIdIO.load();
     }
 }
