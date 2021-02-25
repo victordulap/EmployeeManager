@@ -17,9 +17,9 @@ public class Employee {
     Job job - Job is a enum with jobs
      */
 
-    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     //    addition fields
-    private static int lastId = 0;
+    public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+    private static Integer lastId = 0;
     //    employee fields
     private Integer id;
     private String name;
@@ -53,6 +53,15 @@ public class Employee {
         this.job = job;
     }
 
+    /**
+     * Constructor used when adding new Employees
+     * @param name
+     * @param surname
+     * @param idnp
+     * @param birthDate
+     * @param salary
+     * @param job
+     */
     public Employee(String name, String surname, String idnp, LocalDate birthDate, Double salary, Job job) {
         this.id = lastId++;
         this.name = name;
@@ -88,7 +97,7 @@ public class Employee {
     }
 
     public static List<Employee> getDummyEmployees() {
-        List<Employee> emps = new ArrayList<>(5);
+        List<Employee> emps = new ArrayList<>(6);
 
         emps.add(new Employee("Victor", "Dulap", "1234567890123", LocalDate.of(2003, 1, 10), (double) 2000, Job.PROGRAMMER));
         emps.add(new Employee("Ion", "Alb", "4567112238903", LocalDate.of(2000, 12, 12), (double) 1200, Job.CHEF));

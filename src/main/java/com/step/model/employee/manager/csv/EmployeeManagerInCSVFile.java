@@ -48,6 +48,6 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
         employees.addAll(csvIO.importFromCSVFile());
         // load lastId
         // todo: make last id loading work
-        lastIdIO.load();
+        Employee.setLastId(lastIdIO.load());
     }
 }

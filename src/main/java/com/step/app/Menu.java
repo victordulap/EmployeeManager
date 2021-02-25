@@ -49,7 +49,6 @@ public class Menu {
                     break;
                 case "2":
                     em = new EmployeeManagerInCSVFile();
-//                    em.getEmployees().addAll(Employee.getDummyEmployees());
                     modeChosen = true;
                     break;
 //                case "3":
