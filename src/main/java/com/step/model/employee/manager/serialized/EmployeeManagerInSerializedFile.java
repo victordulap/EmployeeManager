@@ -37,11 +37,17 @@ public class EmployeeManagerInSerializedFile implements EmployeeManager {
 
     @Override
     public void save() {
-
+        // save emp list
+        serializedIO.exportEmps(this.employees);
+        // save last id
+        lastIdIO.save(Employee.getLastId());
     }
 
     @Override
     public void load() {
-
+        // load emp list
+        employees.addAll(serializedIO.importEmps());
+        // load last id
+        Employee.setLastId(lastIdIO.load());
     }
 }

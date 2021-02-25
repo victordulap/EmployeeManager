@@ -1,11 +1,12 @@
 package com.step.model.employee;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Employee {
+public class Employee implements Serializable {
     /*
     int id - unique, gestionated from data base
 	string name
@@ -18,6 +19,7 @@ public class Employee {
      */
 
     //    addition fields
+    public static final long serialVersionUID = 1L;
     public static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     private static Integer lastId = 0;
     //    employee fields
