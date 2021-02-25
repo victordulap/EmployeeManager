@@ -31,7 +31,7 @@ public class Menu {
             System.out.println();
             System.out.println("\t1. Demo (no saving at all)");
             System.out.println("\t2. CSV file");
-            System.out.println("\t3. Encoded file");
+            System.out.println("\t3. Serialized file");
             System.out.println("\t4. XML file");
             System.out.println("\t5. JSON file");
             System.out.println("\t6. Data base");

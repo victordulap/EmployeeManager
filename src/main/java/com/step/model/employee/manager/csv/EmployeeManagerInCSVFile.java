@@ -37,7 +37,7 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     @Override
     public void save() {
         // call function to save data in file
-        csvIO.exportToCSVFile(employees);
+        csvIO.exportEmps(employees);
         // save lastId
         lastIdIO.save(Employee.getLastId());
     }
@@ -45,7 +45,7 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     @Override
     public void load() {
         // call function to get data from the file
-        employees.addAll(csvIO.importFromCSVFile());
+        employees.addAll(csvIO.importEmps());
         // load lastId
         // todo: make last id loading work
         Employee.setLastId(lastIdIO.load());

@@ -2,17 +2,19 @@ package com.step.model.employee.manager.csv;
 
 import com.step.model.employee.Employee;
 import com.step.model.employee.Job;
+import com.step.model.employee.manager.EmployeeFileIO;
 
 import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeCsvIO {
+public class EmployeeCsvIO implements EmployeeFileIO {
     private String path = ".\\data\\";
     private String fileName = "employeesCSV.txt";
 
-    public List<Employee> importFromCSVFile() {
+    @Override
+    public List<Employee> importEmps() {
         File file = new File(this.path + this.fileName);
         if (!file.exists()) {
             try {
@@ -43,7 +45,8 @@ public class EmployeeCsvIO {
         return empsFromFile;
     }
 
-    public void exportToCSVFile(List<Employee> employees) {
+    @Override
+    public void exportEmps(List<Employee> employees) {
         File file = new File(this.path + this.fileName);
         if (!file.exists()) {
             try {
