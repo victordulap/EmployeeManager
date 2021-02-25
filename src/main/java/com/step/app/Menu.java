@@ -6,6 +6,7 @@ import com.step.model.employee.manager.EmployeeManager;
 import com.step.model.employee.manager.csv.EmployeeManagerInCSVFile;
 import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.model.employee.manager.serialized.EmployeeManagerInSerializedFile;
+import com.step.model.employee.manager.xml.EmployeeManagerInXMLFile;
 import com.step.utilities.Utilities;
 
 import java.util.Scanner;
@@ -56,8 +57,10 @@ public class Menu {
                     em = new EmployeeManagerInSerializedFile();
                     modeChosen = true;
                     break;
-//                case "4":
-//                    break;
+                case "4":
+                    em = new EmployeeManagerInXMLFile();
+                    modeChosen = true;
+                    break;
 //                case "5":
 //                    break;
 //                case "6":

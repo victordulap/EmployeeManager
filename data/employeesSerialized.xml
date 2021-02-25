@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<employees>
+  <employee>
+    <id>0</id>
+    <name>Victor</name>
+    <surname>Dulap</surname>
+    <idnp>1230991230991</idnp>
+    <birthDate>1998-08-09</birthDate>
+    <engagedOn>2021-02-25</engagedOn>
+    <salary>1990.0</salary>
+    <job>PROGRAMMER</job>
+  </employee>
+  <employee>
+    <id>1</id>
+    <name>Abraham</name>
+    <surname>Blue</surname>
+    <idnp>1235333454561</idnp>
+    <birthDate>1989-02-21</birthDate>
+    <engagedOn>2021-02-25</engagedOn>
+    <salary>123.0</salary>
+    <job>CHEF</job>
+  </employee>
+  <employee>
+    <id>2</id>
+    <name>Donald</name>
+    <surname>Smith</surname>
+    <idnp>1230980983123</idnp>
+    <birthDate>1987-12-08</birthDate>
+    <engagedOn>2021-02-25</engagedOn>
+    <salary>1200.0</salary>
+    <job>MANAGER</job>
+  </employee>
+</employees>
