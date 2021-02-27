@@ -4,6 +4,7 @@ import com.step.model.employee.Employee;
 import com.step.model.employee.consoleData.EmployeeOutputInConsole;
 import com.step.model.employee.manager.EmployeeManager;
 import com.step.model.employee.manager.csv.EmployeeManagerInCSVFile;
+import com.step.model.employee.manager.json.EmployeeManagerInJSONFile;
 import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.model.employee.manager.serialized.EmployeeManagerInSerializedFile;
 import com.step.model.employee.manager.xml.EmployeeManagerInXMLFile;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 public class Menu {
     //    todo: make the user to choose the EmployeeManager method of working
-    private EmployeeManager em;
+    private EmployeeManager em = null;
     private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
     private Utilities util = new Utilities();
 
@@ -23,7 +24,7 @@ public class Menu {
 
     private void selectAppModeMenu() {
         Scanner sc = new Scanner(System.in);
-        Boolean modeChosen = false;
+        boolean modeChosen = false;
         String nav = "";
 
         util.clearScreen();
@@ -61,8 +62,10 @@ public class Menu {
                     em = new EmployeeManagerInXMLFile();
                     modeChosen = true;
                     break;
-//                case "5":
-//                    break;
+                case "5":
+                    em = new EmployeeManagerInJSONFile();
+                    modeChosen = true;
+                    break;
 //                case "6":
 //                    break;
                 case "0":

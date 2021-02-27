@@ -20,7 +20,7 @@ import java.util.List;
 
 public class EmployeeXMLIO implements EmployeeFileIO {
     private String path = ".\\data\\";
-    private String fileName = "employeesSerialized.xml";
+    private String fileName = "employees.xml";
     private FileUtilities fileUtilities = new FileUtilities();
 
     @Override
