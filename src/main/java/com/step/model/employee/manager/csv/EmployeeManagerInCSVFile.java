@@ -47,7 +47,6 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
         // call function to get data from the file
         employees.addAll(csvIO.importEmps());
         // load lastId
-        // todo: make last id loading work
         Employee.setLastId(lastIdIO.load());
     }
 }
