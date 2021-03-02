@@ -65,4 +65,21 @@ public class EmployeeDAO {
             throwables.printStackTrace();
         }
     }
+
+    public boolean delete(int id) {
+        String preparedSql = "DELETE FROM emp.employees " +
+                "where id=?";
+
+        try (Connection connection = this.initConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(preparedSql)) {
+            preparedStatement.setInt(1, id);
+
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
+    }
 }

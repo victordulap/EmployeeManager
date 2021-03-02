@@ -19,7 +19,7 @@ public class EmployeeManagerInDB implements EmployeeManager {
 
     @Override
     public boolean delete(int id) {
-        return false;
+        return empDao.delete(id);
     }
 
     @Override
