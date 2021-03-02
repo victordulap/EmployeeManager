@@ -14,7 +14,7 @@ public class EmployeeManagerInDB implements EmployeeManager {
 
     @Override
     public boolean edit(int id, Employee newEmployee) {
-        return false;
+        return empDao.update(id, newEmployee);
     }
 
     @Override

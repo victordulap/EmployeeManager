@@ -68,11 +68,34 @@ public class EmployeeDAO {
 
     public boolean delete(int id) {
         String preparedSql = "DELETE FROM emp.employees " +
-                "where id=?";
+                "WHERE id=?";
 
         try (Connection connection = this.initConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(preparedSql)) {
             preparedStatement.setInt(1, id);
+
+            int rows = preparedStatement.executeUpdate();
+            return rows > 0;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean update(int id, Employee newEmp) {
+        String preparedSql = "UPDATE emp.employees " +
+                "SET name=?, surname=?, salary=?, job=? " +
+                "WHERE id=?";
+
+        try (Connection connection = this.initConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(preparedSql)) {
+
+            preparedStatement.setString(1, newEmp.getName());
+            preparedStatement.setString(2, newEmp.getSurname());
+            preparedStatement.setDouble(3, newEmp.getSalary());
+            preparedStatement.setString(4, String.valueOf(newEmp.getJob()));
+            preparedStatement.setInt(5, id);
 
             int rows = preparedStatement.executeUpdate();
             return rows > 0;
