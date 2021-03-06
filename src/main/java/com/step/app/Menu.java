@@ -9,13 +9,17 @@ import com.step.model.employee.manager.json.EmployeeManagerInJSONFile;
 import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.model.employee.manager.serialized.EmployeeManagerInSerializedFile;
 import com.step.model.employee.manager.xml.EmployeeManagerInXMLFile;
+import com.step.model.employee.search.EmployeeSort;
 import com.step.utilities.Utilities;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
     private EmployeeManager em = null;
     private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
+    private EmployeeSort empSort = new EmployeeSort();
     private Utilities util = new Utilities();
 
 //    {
@@ -29,7 +33,7 @@ public class Menu {
 
         util.clearScreen();
 
-        while(!modeChosen) {
+        while (!modeChosen) {
             System.out.println("EMPLOYEE MANAGEMENT, choose data processing mode:");
             System.out.println();
             System.out.println("\t1. Demo (no saving at all)");
@@ -83,7 +87,8 @@ public class Menu {
             }
 
             util.clearScreen();
-        };
+        }
+        ;
     }
 
     public void startMenu() {
@@ -115,7 +120,11 @@ public class Menu {
 
             switch (nav) {
                 case "1":
-                    empShow.showEmployeesInTable(em.getEmployees());
+                    try {
+                        this.viewMenu();
+                    } catch (Exception e) {
+                        System.out.println("Exiting submenu...");
+                    }
                     break;
                 case "2":
                     em.insert(empShow.getNewEmployee(em.getEmployees()));
@@ -220,5 +229,137 @@ public class Menu {
         } while (!nav.equals("0"));
 
         return foundEmp;
+    }
+
+    private void viewMenu() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        String nav = "";
+
+        List<Employee> searchedEmps = new ArrayList<>();
+
+        util.clearScreen();
+
+        do {
+            System.out.println("View menu");
+            System.out.println();
+            System.out.println("\t1. All employees");
+            System.out.println("\t2. Searched employees (by filtering and sorting conditions)");
+            System.out.println("\t3. Filter by");
+            System.out.println("\t4. Sort by");
+            System.out.println();
+            System.out.println("\t0. exit");
+
+            System.out.print("\nenter submenu number: ");
+            nav = sc.nextLine();
+
+            switch (nav) {
+                case "1":
+                    empShow.showEmployeesInTable(em.getEmployees());
+                    break;
+                case "2":
+                    empShow.showEmployeesInTable(searchedEmps);
+                    break;
+                case "3":
+                case "4":
+                    searchedEmps = this.sortMenu();
+                    break;
+                case "0":
+                    throw new Exception("Quited menu");
+
+                default:
+                    System.out.println("\nNo such submenu, try again (ex: 1)");
+                    util.enterAnyValueToContinue();
+                    break;
+            }
+
+            util.clearScreen();
+        } while (!nav.equals("0"));
+    }
+
+
+    private Employee filterMenu() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        String nav = "";
+        Employee foundEmp = null;
+
+        util.clearScreen();
+
+        do {
+            System.out.println("Filter by");
+            System.out.println();
+            System.out.println("\t1. id");
+            System.out.println("\t2. idnp");
+            System.out.println("\t3. name and surname");
+            System.out.println();
+            System.out.println("\t0. exit");
+
+            System.out.print("\nenter submenu number: ");
+            nav = sc.nextLine();
+
+            switch (nav) {
+                case "1":
+                    return empShow.getEmployeeById(em.getEmployees());
+                case "2":
+                    return empShow.getEmployeeByIdnp(em.getEmployees());
+                case "3":
+                    return empShow.getEmployeeByName(em.getEmployees());
+                case "0":
+                    throw new Exception("Quited menu");
+
+                default:
+                    System.out.println("\nNo such submenu, try again (ex: 1)");
+                    util.enterAnyValueToContinue();
+                    break;
+            }
+
+            util.clearScreen();
+        } while (!nav.equals("0"));
+
+        return foundEmp;
+    }
+
+    private List<Employee> sortMenu() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        String nav = "";
+        boolean optionSelected = false;
+
+        List<Employee> sortedEmps = new ArrayList<>();
+
+        util.clearScreen();
+
+        while (!optionSelected) {
+            System.out.println("Sort by");
+            System.out.println();
+            System.out.println("\t1. salary asc");
+            System.out.println("\t2. salary desc");
+            System.out.println("\t3. birthdate asc");
+            System.out.println("\t4. birthdate desc");
+
+
+            System.out.print("\nenter submenu number: ");
+            nav = sc.nextLine();
+
+            switch (nav) {
+                case "1":
+                    sortedEmps = empSort.sortBySalary(em.getEmployees(), true);
+                    optionSelected = true;
+                    break;
+                case "2":
+                    sortedEmps = empSort.sortBySalary(em.getEmployees(), false);
+                    optionSelected = true;
+                    break;
+                case "3":
+                case "4":
+
+                default:
+                    System.out.println("\nNo such submenu, try again (ex: 1)");
+                    util.enterAnyValueToContinue();
+                    break;
+            }
+
+            util.clearScreen();
+        }
+
+        return sortedEmps;
     }
 }
