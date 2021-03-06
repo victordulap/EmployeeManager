@@ -1,4 +1,4 @@
-package com.step.app;
+package com.step.app.menu;
 
 import com.step.model.employee.Employee;
 import com.step.model.employee.consoleData.EmployeeOutputInConsole;
@@ -10,6 +10,7 @@ import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.model.employee.manager.serialized.EmployeeManagerInSerializedFile;
 import com.step.model.employee.manager.xml.EmployeeManagerInXMLFile;
 import com.step.model.employee.search.EmployeeSort;
+import com.step.model.employee.search.EmployeeSortCondition;
 import com.step.utilities.Utilities;
 
 import java.util.ArrayList;
@@ -235,6 +236,7 @@ public class Menu {
         Scanner sc = new Scanner(System.in);
         String nav = "";
 
+        EmployeeSortCondition sortCondition = null;
         List<Employee> searchedEmps = new ArrayList<>();
 
         util.clearScreen();
@@ -257,11 +259,33 @@ public class Menu {
                     empShow.showEmployeesInTable(em.getEmployees());
                     break;
                 case "2":
+                    if (sortCondition != null) {
+                        switch (sortCondition) {
+                            case SALARY_ASC:
+                                searchedEmps = empSort.sortBySalary(em.getEmployees(), true);
+                                break;
+                            case SALARY_DESC:
+                                searchedEmps = empSort.sortBySalary(em.getEmployees(), false);
+                                break;
+                            case BIRTHDATE_ASC:
+                                searchedEmps = empSort.sortByBirthDate(em.getEmployees(), true);
+                                break;
+                            case BIRTHDATE_DESC:
+                                searchedEmps = empSort.sortByBirthDate(em.getEmployees(), false);
+                                break;
+                            case ENGAGEDON_ASC:
+                                searchedEmps = empSort.sortByEngagedOn(em.getEmployees(), true);
+                                break;
+                            case ENGAGEDON_DESC:
+                                searchedEmps = empSort.sortByEngagedOn(em.getEmployees(), false);
+                                break;
+                        }
+                    }
                     empShow.showEmployeesInTable(searchedEmps);
                     break;
                 case "3":
                 case "4":
-                    searchedEmps = this.sortMenu();
+                    sortCondition = this.sortMenu();
                     break;
                 case "0":
                     throw new Exception("Quited menu");
@@ -318,12 +342,12 @@ public class Menu {
         return foundEmp;
     }
 
-    private List<Employee> sortMenu() throws Exception {
+    private EmployeeSortCondition sortMenu(){
         Scanner sc = new Scanner(System.in);
         String nav = "";
         boolean optionSelected = false;
 
-        List<Employee> sortedEmps = new ArrayList<>();
+        EmployeeSortCondition condition = null;
 
         util.clearScreen();
 
@@ -334,6 +358,8 @@ public class Menu {
             System.out.println("\t2. salary desc");
             System.out.println("\t3. birthdate asc");
             System.out.println("\t4. birthdate desc");
+            System.out.println("\t5. engaged_on asc");
+            System.out.println("\t6. engaged_on desc");
 
 
             System.out.print("\nenter submenu number: ");
@@ -341,15 +367,29 @@ public class Menu {
 
             switch (nav) {
                 case "1":
-                    sortedEmps = empSort.sortBySalary(em.getEmployees(), true);
+                    condition = EmployeeSortCondition.SALARY_ASC;
                     optionSelected = true;
                     break;
                 case "2":
-                    sortedEmps = empSort.sortBySalary(em.getEmployees(), false);
+                    condition = EmployeeSortCondition.SALARY_DESC;
                     optionSelected = true;
                     break;
                 case "3":
+                    condition = EmployeeSortCondition.BIRTHDATE_ASC;
+                    optionSelected = true;
+                    break;
                 case "4":
+                    condition = EmployeeSortCondition.BIRTHDATE_DESC;
+                    optionSelected = true;
+                    break;
+                case "5":
+                    condition = EmployeeSortCondition.ENGAGEDON_ASC;
+                    optionSelected = true;
+                    break;
+                case "6":
+                    condition = EmployeeSortCondition.ENGAGEDON_DESC;
+                    optionSelected = true;
+                    break;
 
                 default:
                     System.out.println("\nNo such submenu, try again (ex: 1)");
@@ -360,6 +400,6 @@ public class Menu {
             util.clearScreen();
         }
 
-        return sortedEmps;
+        return condition;
     }
 }
