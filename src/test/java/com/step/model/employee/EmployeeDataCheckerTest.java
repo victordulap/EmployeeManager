@@ -10,12 +10,11 @@ public class EmployeeDataCheckerTest {
     public void testCheckIfIDNPValid() {
         EmployeeDataChecker edc = new EmployeeDataChecker();
 
-        TestCase.assertTrue("Testing if we can add a valid IDNP", edc.checkIfIDNPFromStringIsValid("1231231231230", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("Can't add null indp", edc.checkIfIDNPFromStringIsValid(null, Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must contain only numbers", edc.checkIfIDNPFromStringIsValid("asd", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must contain 13 symbols", edc.checkIfIDNPFromStringIsValid("123", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must not be repetitive", edc.checkIfIDNPFromStringIsValid("1234567890123", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP cant be empty", edc.checkIfIDNPFromStringIsValid("", Employee.getDummyEmployees(), true));
+        TestCase.assertTrue("Testing if we can add a valid IDNP", edc.checkIfIDNPFromStringIsValid("1231231231230"));
+        TestCase.assertFalse("Can't add null indp", edc.checkIfIDNPFromStringIsValid(null));
+        TestCase.assertFalse("IDNP must contain only numbers", edc.checkIfIDNPFromStringIsValid("asd"));
+        TestCase.assertFalse("IDNP must contain 13 symbols", edc.checkIfIDNPFromStringIsValid("123"));
+        TestCase.assertFalse("IDNP cant be empty", edc.checkIfIDNPFromStringIsValid(""));
     }
 
     @Test

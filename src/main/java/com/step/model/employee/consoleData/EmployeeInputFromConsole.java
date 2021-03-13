@@ -48,6 +48,7 @@ public class EmployeeInputFromConsole {
      * @param message   text to show in console, ex:
      *                  message = "Enter name"
      *                  output: Enter name: (input form keyboard)
+     * @param checkIfIdnpUnique to run the method of checking repetitive idnp
      * @param employees to check in if found a repetitive idnp
      * @return valid name with first letter upper case
      */
@@ -55,10 +56,18 @@ public class EmployeeInputFromConsole {
         while (true) {
             String idnp = this.readString(message);
 
-            if (edc.checkIfIDNPFromStringIsValid(idnp, employees, checkIfIdnpUnique)) {
-                return idnp;
+            if (edc.checkIfIDNPFromStringIsValid(idnp)) {
+                if (checkIfIdnpUnique) {
+                    if (edc.checkIfIDNPIsUnique(idnp, employees)) {
+                        return idnp;
+                    } else {
+                        this.showError("IDNP invalid, it should be unique, try again...");
+                    }
+                } else {
+                    return idnp;
+                }
             } else {
-                this.showError("IDNP invalid, should contain 13 numbers and be unique, try again... (ex of valid idnp: \"1234567890123\")");
+                this.showError("IDNP invalid, should contain strictly 13 numbers, try again... (ex of valid idnp: \"1234567890123\")");
             }
         }
     }

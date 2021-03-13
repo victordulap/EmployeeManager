@@ -160,18 +160,8 @@ public class EmployeeOutputInConsole {
         boolean employeeFound = false;
         Employee empById = null;
 
-        while (!employeeFound) {
-            Integer id = eifc.readId("Enter id: ");
-
-            empById = employeeFinder.findById(employees, id);
-
-            return empById;
-//            if (empById != null) {
-//                employeeFound = true;
-//            } else {
-//                System.out.println("Employee not found, try again...");
-//            }
-        }
+        Integer id = eifc.readId("Enter id: ");
+        empById = employeeFinder.findById(employees, id);
 
         return empById;
     }

@@ -8,10 +8,9 @@ public class EmployeeDataChecker {
     /**
      * doesn't check if idnp is unique,
      * this.checkIfIDNPRepetitive(idnp, employees) is for checking that ^
-     * @param employees employees to check in, if idnp is repetitive
      * @return true if idnp from string is valid, false if otherwise
      */
-    public boolean checkIfIDNPFromStringIsValid(String idnp, List<Employee> employees, boolean checkIfUnique) {
+    public boolean checkIfIDNPFromStringIsValid(String idnp) {
         return idnp != null && idnp.length() == 13 && idnp.matches("[0-9]+");
     }
 
