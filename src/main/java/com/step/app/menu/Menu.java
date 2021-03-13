@@ -15,6 +15,7 @@ import com.step.model.employee.search.EmployeeSort;
 import com.step.model.employee.search.EmployeeSortCondition;
 import com.step.utilities.Utilities;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -374,16 +375,22 @@ public class Menu {
                     optionSelected = true;
                     break;
                 case "5":
-//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
-//                    optionSelected = true;
+                    LocalDate minBirthDate = empIn.readBirthDate("Enter min birth date: ");
+                    LocalDate maxBirthDate = empIn.readBirthDate("Enter max birth date: ");
+                    filteredEmployees = new EmployeeFilter().filterByBirthDate(minBirthDate, maxBirthDate, empsToFilter);
+                    optionSelected = true;
                     break;
                 case "6":
-//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
-//                    optionSelected = true;
+                    LocalDate minEngagedOn = empIn.readBirthDate("Enter min engagement date: ");
+                    LocalDate maxEngagedOn = empIn.readBirthDate("Enter max engagement date: ");
+                    filteredEmployees = new EmployeeFilter().filterByEngagedOn(minEngagedOn, maxEngagedOn, empsToFilter);
+                    optionSelected = true;
                     break;
                 case "7":
-//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
-//                    optionSelected = true;
+                    Double minSalary = empIn.readDouble("Enter min salary: ");
+                    Double maxSalary = empIn.readDouble("Enter max salarry: ");
+                    filteredEmployees = new EmployeeFilter().filterBySalary(minSalary, maxSalary, empsToFilter);
+                    optionSelected = true;
                     break;
 
                 default:
