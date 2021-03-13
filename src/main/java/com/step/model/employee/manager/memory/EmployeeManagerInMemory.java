@@ -13,8 +13,8 @@ public class EmployeeManagerInMemory implements EmployeeManager {
     private EmployeeManagerWithList eml = new EmployeeManagerWithList();
 
     @Override
-    public void insert(Employee employee) {
-        eml.insert(employees, employee);
+    public boolean insert(Employee employee) {
+        return eml.insert(employees, employee);
     }
 
     @Override

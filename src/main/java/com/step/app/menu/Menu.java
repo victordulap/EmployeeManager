@@ -92,7 +92,7 @@ public class Menu {
         ;
     }
 
-    public void startMenu() {
+    public void mainMenu() {
         this.selectAppModeMenu();
 
         Scanner sc = new Scanner(System.in);
@@ -128,7 +128,12 @@ public class Menu {
                     }
                     break;
                 case "2":
-                    em.insert(empShow.getNewEmployee(em.getEmployees()));
+                    boolean inserted = em.insert(empShow.getNewEmployee(em.getEmployees()));
+                    if (inserted) {
+                        System.out.println("Employee inserted");
+                    } else {
+                        System.out.println("New employee wasn't inserted, idnp may be repetitive");
+                    }
                     break;
                 case "3":
                     boolean empToEditNotFound = true;

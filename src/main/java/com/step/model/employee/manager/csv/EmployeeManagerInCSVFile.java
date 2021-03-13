@@ -15,8 +15,8 @@ public class EmployeeManagerInCSVFile implements EmployeeManager {
     private EmployeeLastIdIO lastIdIO = new EmployeeLastIdIO("employeeCSVLastId.txt");
 
     @Override
-    public void insert(Employee employee) {
-        eml.insert(employees, employee);
+    public boolean insert(Employee employee) {
+        return eml.insert(employees, employee);
     }
 
     @Override

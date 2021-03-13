@@ -45,7 +45,7 @@ public class EmployeeDAO {
         return employees;
     }
 
-    public void insert(Employee employee) {
+    public boolean insert(Employee employee) {
         String preparedSql = "INSERT INTO " +
                 "emp.employees (name, surname, idnp, birthdate, engagedon, salary, job) " +
                 "values (?,?,?,?,?,?,?)";
@@ -61,8 +61,10 @@ public class EmployeeDAO {
             preparedStatement.setString(7, String.valueOf(employee.getJob()));
 
             int rows = preparedStatement.executeUpdate();
+            return rows > 0;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
     }
 

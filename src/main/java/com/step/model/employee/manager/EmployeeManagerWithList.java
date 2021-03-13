@@ -1,15 +1,20 @@
 package com.step.model.employee.manager;
 
 import com.step.model.employee.Employee;
+import com.step.model.employee.EmployeeDataChecker;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeManagerWithList {
-    public void insert(List<Employee> employees, Employee employee) {
-        // todo: implement the unique idnp checking here
+    private final EmployeeDataChecker edc = new EmployeeDataChecker();
 
-        employees.add(employee);
+    public boolean insert(List<Employee> employees, Employee employee) {
+        boolean idnpIsUnique = edc.checkIfIDNPIsUnique(employee.getIdnp(), employees);
+        if (idnpIsUnique) {
+            return employees.add(employee);
+        } else {
+            return false;
+        }
     }
 
     public boolean edit(List<Employee> employees, int id, Employee newEmployee) {

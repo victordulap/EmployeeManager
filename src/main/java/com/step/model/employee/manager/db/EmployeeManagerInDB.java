@@ -1,15 +1,24 @@
 package com.step.model.employee.manager.db;
 
 import com.step.model.employee.Employee;
+import com.step.model.employee.EmployeeDataChecker;
 import com.step.model.employee.manager.EmployeeManager;
 
 import java.util.List;
 
 public class EmployeeManagerInDB implements EmployeeManager {
     private EmployeeDAO empDao = new EmployeeDAO();
+    private final EmployeeDataChecker edc = new EmployeeDataChecker();
+
     @Override
-    public void insert(Employee employee) {
-        empDao.insert(employee);
+    public boolean insert(Employee employee) {
+        boolean idnpIsUnique = edc.checkIfIDNPIsUnique(employee.getIdnp(), getEmployees());
+
+        if (idnpIsUnique) {
+            return empDao.insert(employee);
+        } else {
+            return false;
+        }
     }
 
     @Override
