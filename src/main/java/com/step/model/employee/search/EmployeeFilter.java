@@ -17,4 +17,16 @@ public class EmployeeFilter {
                 .filter(e -> e.getIdnp().matches(".*" + idnp + ".*")) // similar to %LIKE% in SQL
                 .collect(Collectors.toList());
     }
+
+    public List<Employee> filterByName(String name, List<Employee> empsToFilter) {
+        return empsToFilter.stream()
+                .filter(e -> e.getName().matches("(?i).*" + name + ".*")) // (?i) - case ignore
+                .collect(Collectors.toList());
+    }
+
+    public List<Employee> filterBySurname(String surname, List<Employee> empsToFilter) {
+        return empsToFilter.stream()
+                .filter(e ->  e.getSurname().matches("(?i).*" + surname + ".*"))
+                .collect(Collectors.toList());
+    }
 }

@@ -342,9 +342,11 @@ public class Menu {
             System.out.println();
             System.out.println("\t1. id");
             System.out.println("\t2. idnp");
-            System.out.println("\t3. name and surname");
-            System.out.println("\t4. birth date");
-            System.out.println("\t5. engagement date");
+            System.out.println("\t3. name");
+            System.out.println("\t4. surname");
+            System.out.println("\t5. birth date");
+            System.out.println("\t6. engagement date");
+            System.out.println("\t7. salary");
 
             System.out.print("\nenter submenu number: ");
             nav = sc.nextLine();
@@ -362,16 +364,26 @@ public class Menu {
                     optionSelected = true;
                     break;
                 case "3":
-                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+                    String name = empIn.readString("Enter name (or a part of it): ");
+                    filteredEmployees = new EmployeeFilter().filterByName(name, empsToFilter);
                     optionSelected = true;
                     break;
                 case "4":
-                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+                    String surname = empIn.readString("Enter surname (or a part of it): ");
+                    filteredEmployees = new EmployeeFilter().filterBySurname(surname, empsToFilter);
                     optionSelected = true;
                     break;
                 case "5":
-                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
-                    optionSelected = true;
+//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+//                    optionSelected = true;
+                    break;
+                case "6":
+//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+//                    optionSelected = true;
+                    break;
+                case "7":
+//                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+//                    optionSelected = true;
                     break;
 
                 default:
