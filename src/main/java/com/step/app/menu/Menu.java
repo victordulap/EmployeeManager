@@ -1,6 +1,7 @@
 package com.step.app.menu;
 
 import com.step.model.employee.Employee;
+import com.step.model.employee.consoleData.EmployeeInputFromConsole;
 import com.step.model.employee.consoleData.EmployeeOutputInConsole;
 import com.step.model.employee.manager.EmployeeManager;
 import com.step.model.employee.manager.csv.EmployeeManagerInCSVFile;
@@ -9,6 +10,7 @@ import com.step.model.employee.manager.json.EmployeeManagerInJSONFile;
 import com.step.model.employee.manager.memory.EmployeeManagerInMemory;
 import com.step.model.employee.manager.serialized.EmployeeManagerInSerializedFile;
 import com.step.model.employee.manager.xml.EmployeeManagerInXMLFile;
+import com.step.model.employee.search.EmployeeFilter;
 import com.step.model.employee.search.EmployeeSort;
 import com.step.model.employee.search.EmployeeSortCondition;
 import com.step.utilities.Utilities;
@@ -19,7 +21,8 @@ import java.util.Scanner;
 
 public class Menu {
     private EmployeeManager em = null;
-    private EmployeeOutputInConsole empShow = new EmployeeOutputInConsole();
+    private EmployeeOutputInConsole empOut = new EmployeeOutputInConsole();
+    private EmployeeInputFromConsole empIn = new EmployeeInputFromConsole();
     private EmployeeSort empSort = new EmployeeSort();
     private Utilities util = new Utilities();
 
@@ -128,7 +131,7 @@ public class Menu {
                     }
                     break;
                 case "2":
-                    boolean inserted = em.insert(empShow.getNewEmployee(em.getEmployees()));
+                    boolean inserted = em.insert(empOut.getNewEmployee(em.getEmployees()));
                     if (inserted) {
                         System.out.println("Employee inserted");
                     } else {
@@ -144,7 +147,7 @@ public class Menu {
                             if (empToEdit != null) {
                                 empToEditNotFound = false;
 
-                                Employee newEmp = empShow.editEmployee(empToEdit);
+                                Employee newEmp = empOut.editEmployee(empToEdit);
                                 em.edit(empToEdit.getId(), newEmp);
                             } else {
                                 System.out.println("Employee not found.");
@@ -217,11 +220,11 @@ public class Menu {
 
             switch (nav) {
                 case "1":
-                    return empShow.getEmployeeById(em.getEmployees());
+                    return empOut.getEmployeeById(em.getEmployees());
                 case "2":
-                    return empShow.getEmployeeByIdnp(em.getEmployees());
+                    return empOut.getEmployeeByIdnp(em.getEmployees());
                 case "3":
-                    return empShow.getEmployeeByName(em.getEmployees());
+                    return empOut.getEmployeeByName(em.getEmployees());
                 case "0":
                     throw new Exception("Quited menu");
 
@@ -242,7 +245,8 @@ public class Menu {
         String nav = "";
 
         EmployeeSortCondition sortCondition = null;
-        List<Employee> searchedEmps = new ArrayList<>();
+        boolean filterCondition = false;
+        List<Employee> searchedEmps = em.getEmployees();
 
         util.clearScreen();
 
@@ -251,8 +255,9 @@ public class Menu {
             System.out.println();
             System.out.println("\t1. All employees");
             System.out.println("\t2. Searched employees (by filtering and sorting conditions)");
-            System.out.println("\t3. Filter by");
+            System.out.println("\t3. Filter by (note, if you want to apply same filter with different values, reset the conditions)");
             System.out.println("\t4. Sort by");
+            System.out.println("\t5. Reset searching conditions");
             System.out.println();
             System.out.println("\t0. exit");
 
@@ -261,40 +266,54 @@ public class Menu {
 
             switch (nav) {
                 case "1":
-                    empShow.showEmployeesInTable(em.getEmployees());
+                    empOut.showEmployeesInTable(em.getEmployees());
                     break;
                 case "2":
-//                    first filter, than sort
+                    // first filter, than sort
                     // todo: add filtering
                     // salary range, name and surname, birthdate range
 
+                    // SORT
                     if (sortCondition != null) {
                         switch (sortCondition) {
                             case SALARY_ASC:
-                                searchedEmps = empSort.sortBySalary(em.getEmployees(), true);
+                                searchedEmps = empSort.sortBySalary(searchedEmps, true);
                                 break;
                             case SALARY_DESC:
-                                searchedEmps = empSort.sortBySalary(em.getEmployees(), false);
+                                searchedEmps = empSort.sortBySalary(searchedEmps, false);
                                 break;
                             case BIRTHDATE_ASC:
-                                searchedEmps = empSort.sortByBirthDate(em.getEmployees(), true);
+                                searchedEmps = empSort.sortByBirthDate(searchedEmps, true);
                                 break;
                             case BIRTHDATE_DESC:
-                                searchedEmps = empSort.sortByBirthDate(em.getEmployees(), false);
+                                searchedEmps = empSort.sortByBirthDate(searchedEmps, false);
                                 break;
                             case ENGAGEDON_ASC:
-                                searchedEmps = empSort.sortByEngagedOn(em.getEmployees(), true);
+                                searchedEmps = empSort.sortByEngagedOn(searchedEmps, true);
                                 break;
                             case ENGAGEDON_DESC:
-                                searchedEmps = empSort.sortByEngagedOn(em.getEmployees(), false);
+                                searchedEmps = empSort.sortByEngagedOn(searchedEmps, false);
                                 break;
                         }
                     }
-                    empShow.showEmployeesInTable(searchedEmps);
+
+                    if (sortCondition != null || filterCondition) {
+                        empOut.showEmployeesInTable(searchedEmps);
+                    } else {
+                        empOut.showEmployeesInTable(null);
+                    }
                     break;
                 case "3":
+                    searchedEmps = this.filterMenu(searchedEmps);
+                    filterCondition = true;
+                    break;
                 case "4":
                     sortCondition = this.sortMenu();
+                    break;
+                case "5":
+                    sortCondition = null;
+                    filterCondition = false;
+                    searchedEmps = em.getEmployees();
                     break;
                 case "0":
                     throw new Exception("Quited menu");
@@ -310,34 +329,50 @@ public class Menu {
     }
 
 
-    private Employee filterMenu() throws Exception {
+    private List<Employee> filterMenu(List<Employee> empsToFilter) {
         Scanner sc = new Scanner(System.in);
         String nav = "";
-        Employee foundEmp = null;
+        boolean optionSelected = false;
+        List<Employee> filteredEmployees = new ArrayList<>();
 
         util.clearScreen();
 
-        do {
+        while (!optionSelected) {
             System.out.println("Filter by");
             System.out.println();
             System.out.println("\t1. id");
             System.out.println("\t2. idnp");
             System.out.println("\t3. name and surname");
-            System.out.println();
-            System.out.println("\t0. exit");
+            System.out.println("\t4. birth date");
+            System.out.println("\t5. engagement date");
 
             System.out.print("\nenter submenu number: ");
             nav = sc.nextLine();
 
             switch (nav) {
                 case "1":
-                    return empShow.getEmployeeById(em.getEmployees());
+                    Integer minId = empIn.readId("Enter min id: ");
+                    Integer maxId = empIn.readId("Enter max id: ");
+                    filteredEmployees = new EmployeeFilter().filterById(minId, maxId, empsToFilter);
+                    optionSelected = true;
+                    break;
                 case "2":
-                    return empShow.getEmployeeByIdnp(em.getEmployees());
+                    String idnp = empIn.readString("Enter idnp (or a part of it): ");
+                    filteredEmployees = new EmployeeFilter().filterByIDNP(idnp, empsToFilter);
+                    optionSelected = true;
+                    break;
                 case "3":
-                    return empShow.getEmployeeByName(em.getEmployees());
-                case "0":
-                    throw new Exception("Quited menu");
+                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+                    optionSelected = true;
+                    break;
+                case "4":
+                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+                    optionSelected = true;
+                    break;
+                case "5":
+                    filteredEmployees = new EmployeeFilter().filterById(2, 4, empsToFilter);
+                    optionSelected = true;
+                    break;
 
                 default:
                     System.out.println("\nNo such submenu, try again (ex: 1)");
@@ -346,12 +381,12 @@ public class Menu {
             }
 
             util.clearScreen();
-        } while (!nav.equals("0"));
+        }
 
-        return foundEmp;
+        return filteredEmployees;
     }
 
-    private EmployeeSortCondition sortMenu(){
+    private EmployeeSortCondition sortMenu() {
         Scanner sc = new Scanner(System.in);
         String nav = "";
         boolean optionSelected = false;

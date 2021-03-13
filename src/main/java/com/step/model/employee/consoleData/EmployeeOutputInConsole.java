@@ -16,7 +16,7 @@ public class EmployeeOutputInConsole {
     public void showEmployeesInTable(List<Employee> employees) {
         util.clearScreen();
 
-        if (employees.size() > 0) {
+        if (employees != null && employees.size() > 0) {
             System.out.println("EMPLOYEE LIST: \n");
         } else {
             System.out.println("NO EMPLOYEES FOUND!");
@@ -172,7 +172,7 @@ public class EmployeeOutputInConsole {
     public Employee getEmployeeByIdnp(List<Employee> employees) {
         Employee empByIdnp = null;
 
-        String idnp = eifc.readIdnp("Enter idnp: ", employees, false);
+        String idnp = eifc.readIdnp("Enter idnp: ", null, false);
 
         empByIdnp = employeeFinder.findByIdnp(employees, idnp);
 

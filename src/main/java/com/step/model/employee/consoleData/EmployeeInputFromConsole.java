@@ -126,7 +126,7 @@ public class EmployeeInputFromConsole {
         }
     }
 
-    private String readString(String message) {
+    public String readString(String message) {
             Scanner sc = new Scanner(System.in);
 
             System.out.print(message);
