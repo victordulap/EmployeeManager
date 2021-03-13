@@ -7,6 +7,8 @@ import java.util.List;
 
 public class EmployeeManagerWithList {
     public void insert(List<Employee> employees, Employee employee) {
+        // todo: implement the unique idnp checking here
+
         employees.add(employee);
     }
 

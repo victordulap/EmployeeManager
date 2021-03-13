@@ -259,6 +259,10 @@ public class Menu {
                     empShow.showEmployeesInTable(em.getEmployees());
                     break;
                 case "2":
+//                    first filter, than sort
+                    // todo: add filtering
+                    // salary range, name and surname, birthdate range
+
                     if (sortCondition != null) {
                         switch (sortCondition) {
                             case SALARY_ASC:

@@ -3,17 +3,19 @@ package com.step.model.employee;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.util.List;
+
 public class EmployeeDataCheckerTest {
     @Test
     public void testCheckIfIDNPValid() {
         EmployeeDataChecker edc = new EmployeeDataChecker();
 
-        TestCase.assertTrue("Testing if we can add a valid IDNP", edc.checkIfIDNPValid("1231231231230", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("Can't add null indp", edc.checkIfIDNPValid(null, Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must contain only numbers", edc.checkIfIDNPValid("asd", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must contain 13 symbols", edc.checkIfIDNPValid("123", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP must not be repetitive", edc.checkIfIDNPValid("1234567890123", Employee.getDummyEmployees(), true));
-        TestCase.assertFalse("IDNP cant be empty", edc.checkIfIDNPValid("", Employee.getDummyEmployees(), true));
+        TestCase.assertTrue("Testing if we can add a valid IDNP", edc.checkIfIDNPFromStringIsValid("1231231231230", Employee.getDummyEmployees(), true));
+        TestCase.assertFalse("Can't add null indp", edc.checkIfIDNPFromStringIsValid(null, Employee.getDummyEmployees(), true));
+        TestCase.assertFalse("IDNP must contain only numbers", edc.checkIfIDNPFromStringIsValid("asd", Employee.getDummyEmployees(), true));
+        TestCase.assertFalse("IDNP must contain 13 symbols", edc.checkIfIDNPFromStringIsValid("123", Employee.getDummyEmployees(), true));
+        TestCase.assertFalse("IDNP must not be repetitive", edc.checkIfIDNPFromStringIsValid("1234567890123", Employee.getDummyEmployees(), true));
+        TestCase.assertFalse("IDNP cant be empty", edc.checkIfIDNPFromStringIsValid("", Employee.getDummyEmployees(), true));
     }
 
     @Test
@@ -88,5 +90,15 @@ public class EmployeeDataCheckerTest {
         TestCase.assertFalse("Testing if we cant add null", edc.checkIfJobFromStringValid(null));
         TestCase.assertFalse("Testing if we cant add empty job", edc.checkIfJobFromStringValid(""));
         TestCase.assertFalse("Testing if we cant add a invalid job", edc.checkIfJobFromStringValid("invalid job"));
+    }
+
+    @Test
+    public void testCheckIfIDNPIsUnique() {
+        EmployeeDataChecker edc = new EmployeeDataChecker();
+
+        List<Employee> dummyEmps = Employee.getDummyEmployees();
+
+        TestCase.assertFalse("Test if we cant add a repetitive idnp", edc.checkIfIDNPIsUnique(dummyEmps.get(0).getIdnp(), dummyEmps));
+        TestCase.assertTrue("Test if we can add a unique idnp", edc.checkIfIDNPIsUnique("12309887672341", dummyEmps));
     }
 }

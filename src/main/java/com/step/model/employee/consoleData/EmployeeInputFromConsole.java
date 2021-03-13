@@ -55,7 +55,7 @@ public class EmployeeInputFromConsole {
         while (true) {
             String idnp = this.readString(message);
 
-            if (edc.checkIfIDNPValid(idnp, employees, checkIfIdnpUnique)) {
+            if (edc.checkIfIDNPFromStringIsValid(idnp, employees, checkIfIdnpUnique)) {
                 return idnp;
             } else {
                 this.showError("IDNP invalid, should contain 13 numbers and be unique, try again... (ex of valid idnp: \"1234567890123\")");

@@ -6,31 +6,24 @@ import java.util.List;
 
 public class EmployeeDataChecker {
     /**
-     * also checks if idnp is not repetitive
-     *
+     * doesn't check if idnp is unique,
+     * this.checkIfIDNPRepetitive(idnp, employees) is for checking that ^
      * @param employees employees to check in, if idnp is repetitive
+     * @return true if idnp from string is valid, false if otherwise
      */
-    public boolean checkIfIDNPValid(String idnp, List<Employee> employees, boolean checkIfUnique) {
-//        if (idnp == null) {
-//            throw new Exception("IDNP cannot be null");
-//        } else if (!idnp.matches("[0-9]+")) {
-//            throw new Exception("IDNP must contain only numbers");
-//        } else if (idnp.length() != 13) {
-//            throw new Exception("IDNP must contain 13 symbols");
-//        }
-        if (idnp == null || !idnp.matches("[0-9]+") || idnp.length() != 13 || (checkIfUnique ? checkIfIDNPRepetitive(idnp, employees) : false)) {
-            return false;
-        } else {
-            return true;
-        }
+    public boolean checkIfIDNPFromStringIsValid(String idnp, List<Employee> employees, boolean checkIfUnique) {
+        return idnp != null && idnp.length() == 13 && idnp.matches("[0-9]+");
     }
 
-    private boolean checkIfIDNPRepetitive(String idnp, List<Employee> employees) {
-        boolean isIDNPUnique = employees.stream()
+    /**
+     * @param idnp idnp to check
+     * @param employees list to check idnp repetitiveness in
+     * @return true if idnp is unique, false if otherwise
+     */
+    public boolean checkIfIDNPIsUnique(String idnp, List<Employee> employees) {
+        return employees.stream()
                 .map(e -> e.getIdnp())
-                .anyMatch(empIdnp -> empIdnp.equals(idnp));
-
-        return isIDNPUnique;
+                .noneMatch(empIdnp -> empIdnp.equals(idnp));
     }
 
     public boolean checkIfNameValid(String name) {
